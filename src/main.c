@@ -4,17 +4,17 @@
 #define LED_DELAY 1000000U
 
 // AHB1 Base Addresses
-#define STM32_RCC_BASE 0x40023800 //0x40023800-0x40023bff: Reset and Clock control RCC
+#define STM32_RCC_BASE 0x40023800 //0x40023800 - 0x40023BFF: Reset and Clock control RCC
 
 // AHB2 Base Addresses
-#define STM32_GPIOC_BASE 0x48000800U //0x48000800-0x48000bff: GPIO Port C
+#define STM32_GPIOC_BASE 0x40020800 //0x40020800 - 0x40020BFF: GPIO Port C
 
 // Register Offsets
-#define STM32_RCC_AHB1ENR_OFFSET    0x0030 //AHB1 Peripheral Clock enable register
-#define STM32_GPIO_MODER_OFFSET     0x0000 //GPIO port mode register
-#define STM32_GPIO_OTYPER_OFFSET    0x0004 //GPIO port output type register
-#define STM32_GPIO_PUPDR_OFFSET     0x000c //GPIO port pull-up/pull-down register
-#define STM32_GPIO_BSRR_OFFSET      0x0018 //GPIO port bit set/reset register
+#define STM32_RCC_AHB1ENR_OFFSET    0x30 //AHB1 Peripheral Clock enable register
+#define STM32_GPIO_MODER_OFFSET     0x00 //GPIO port mode register
+#define STM32_GPIO_OTYPER_OFFSET    0x04 //GPIO port output type register
+#define STM32_GPIO_PUPDR_OFFSET     0x0c //GPIO port pull-up/pull-down register
+#define STM32_GPIO_BSRR_OFFSET      0x18 //GPIO port bit set/reset register
 
 // Register Addresses
 #define STM32_RCC_AHB1ENR   (STM32_RCC_BASE+STM32_RCC_AHB1ENR_OFFSET)
@@ -51,7 +51,6 @@
 #define GPIO_BSRR_SET(n)    (1 << (n))
 #define GPIO_BSRR_RST(n)    (1 << (n + 16))
 
-static const char fw_version[] = {'V', '1', '.', '0'};
 static uint32_t led_status;
 
 
@@ -87,7 +86,6 @@ int main(int argc, char *argv[]) {
     reg &= ~(GPIO_PUPDR13_MASK);
     reg |= (GPIO_PUPDR_NONE << GPIO_PUPDR13_SHIFT);
     *pGPIOC_PUPDR = reg;
-
     
     while(1){
         *pGPIOC_BSRR = GPIO_BSRR_SET(13);
